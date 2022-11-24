@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "distributor-service"
+		},
+		{
+			"path": "project"
+		},
+		{
+			"path": "front-end"
+		},
+		{
+			"path": "db-service"
+		}
+	],
+	"settings": {}
+}

@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package dbs;
+
+option go_package = "/dbs";
+
+message Todo {
+    int32 ID    = 1; 
+	string Todo =2;         
+	int32 Active = 3;          
+}
+
+message TodoRequest {
+    Todo todoEntry = 1;
+}
+
+message TodoResponse{
+    string result = 1;
+}
+
+message TodoListResponse{
+    repeated Todo TodoList = 1;
+    string result = 2;
+}
+
+message TodoListRequest {}
+
+service DbService {
+    rpc AddToDo(TodoRequest) returns (TodoResponse);
+    rpc GetAllToDos(TodoListRequest) returns (TodoListResponse);
+    rpc CheckToDo(TodoRequest) returns (TodoResponse);
+    rpc DeleteToDo(TodoRequest) returns (TodoResponse);
+}
