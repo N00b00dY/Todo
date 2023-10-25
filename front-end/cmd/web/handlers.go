@@ -5,12 +5,11 @@ import (
 	"embed"
 	"fmt"
 	"front-end/dbs"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 	"net/http"
 	"text/template"
 	"time"
-
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
 )
 
 type pageData struct {
@@ -43,11 +42,13 @@ func (app *Config) Home(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// get todo list from DB service
-	conn, err := grpc.Dial("db-service:5001", grpc.WithTransportCredentials(insecure.NewCredentials()), grpc.WithBlock())
+	conn, err := grpc.Dial(fmt.Sprintf("%s:5001", app.dbServiceName), grpc.WithTransportCredentials(insecure.NewCredentials()), grpc.WithBlock())
 	if err != nil {
 		app.throwJSONError(w, err, http.StatusBadRequest)
 		return
 	}
+
+	fmt.Println("Connection established")
 
 	defer conn.Close()
 
@@ -63,7 +64,7 @@ func (app *Config) Home(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// create newPageData object so CSRFToken is included
-	// should check for other possibilitys
+	// should check for other possibility's
 	newPageData := pageData{
 		TodList: todoList.TodoList,
 	}
