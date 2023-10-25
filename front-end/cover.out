@@ -1,1 +1,26 @@
 mode: set
+front-end/cmd/web/routes.go:11.42,33.2 6 1
+front-end/cmd/web/handlers.go:23.65,33.29 5 1
+front-end/cmd/web/handlers.go:38.2,39.16 2 1
+front-end/cmd/web/handlers.go:45.2,46.16 2 1
+front-end/cmd/web/handlers.go:51.2,61.16 7 1
+front-end/cmd/web/handlers.go:68.2,74.16 3 1
+front-end/cmd/web/handlers.go:33.29,35.3 1 1
+front-end/cmd/web/handlers.go:39.16,42.3 2 0
+front-end/cmd/web/handlers.go:46.16,49.3 2 0
+front-end/cmd/web/handlers.go:61.16,64.3 2 0
+front-end/cmd/web/handlers.go:74.16,77.3 2 0
+front-end/cmd/web/helpers.go:9.105,11.16 2 1
+front-end/cmd/web/helpers.go:14.2,14.22 1 1
+front-end/cmd/web/helpers.go:20.2,23.16 4 1
+front-end/cmd/web/helpers.go:26.2,26.12 1 1
+front-end/cmd/web/helpers.go:11.16,13.3 1 0
+front-end/cmd/web/helpers.go:14.22,15.38 1 0
+front-end/cmd/web/helpers.go:15.38,17.4 1 0
+front-end/cmd/web/helpers.go:23.16,25.3 1 0
+front-end/cmd/web/helpers.go:37.90,40.21 2 1
+front-end/cmd/web/helpers.go:45.2,49.46 4 1
+front-end/cmd/web/helpers.go:40.21,42.3 1 1
+front-end/cmd/web/main.go:15.13,27.16 5 0
+front-end/cmd/web/main.go:27.16,29.3 1 0
+front-end/cmd/web/middleware.go:9.46,19.2 3 1
