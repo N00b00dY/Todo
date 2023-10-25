@@ -6,15 +6,18 @@ import (
 	"net/http"
 )
 
-var portNumber = "8081"
+const portNumber = "8081"
 
 type Config struct {
+	dbServiceName string
 }
 
 func main() {
-	app := Config{}
+	app := Config{
+		dbServiceName: "db-service",
+	}
 
-	fmt.Printf("Server startet at port %v", portNumber)
+	log.Printf("Server startet at port %v", portNumber)
 	serv := &http.Server{
 		Addr:    fmt.Sprintf(":%s", portNumber),
 		Handler: app.routes(),
