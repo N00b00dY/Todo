@@ -4,13 +4,11 @@ import (
 	"context"
 	"fmt"
 	"front-end/dbs"
+	"google.golang.org/grpc"
 	"log"
 	"net"
 	"os"
 	"testing"
-	"time"
-
-	"google.golang.org/grpc"
 )
 
 func TestMain(m *testing.M) {
@@ -37,14 +35,6 @@ func grpcServer() {
 
 type DBServer struct {
 	dbs.UnimplementedDbServiceServer
-}
-
-type Todo struct {
-	ID        int       `json:"id"`
-	Todo      string    `json:"todo"`
-	Active    int       `json:"active"`
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
 }
 
 func (l *DBServer) GetAllToDos(ctx context.Context, req *dbs.TodoListRequest) (*dbs.TodoListResponse, error) {

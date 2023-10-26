@@ -148,21 +148,6 @@ func (u *PostgresRepository) Update(todo Todo) error {
 	return nil
 }
 
-// Delete deletes one todo from the database, by Todo.ID
-func (u *PostgresRepository) Delete(todo Todo) error {
-	ctx, cancel := context.WithTimeout(context.Background(), dbTimeout)
-	defer cancel()
-
-	stmt := `delete from todo where id = $1`
-
-	_, err := u.Conn.ExecContext(ctx, stmt, todo.ID)
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
 // DeleteByID deletes one todo from the database, by ID
 func (u *PostgresRepository) DeleteByID(id int) error {
 	ctx, cancel := context.WithTimeout(context.Background(), dbTimeout)
