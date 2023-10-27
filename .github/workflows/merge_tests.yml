@@ -4,26 +4,38 @@ on:
   workflow_dispatch:
   pull_request:
     branches:
-      - master
+      - main
 
 jobs:
   test-on-merge:
     runs-on: ubuntu-latest
+#    services:
+#      dind:
+#        image: docker:20.10.8-dind
+#        ports:
+#          - 2375:2375
+
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-go@v4
+        with:
+          go-version: '1.19'
       - name: Run tests
         run: |
           echo "Running tests"
           echo " "
           echo "DB service tests"
           cd db-service
+          go mod download
           go test -cover -timeout 30s ./...  
           echo " "
           echo "Distributor service tests"
           cd ../distributor-service
+          go mod download
           go test -cover -timeout 30s ./...
           echo " "
           echo "Front-end service tests"
           cd ../front-end
+          go mod download
           go test -cover -timeout 30s ./...
 
