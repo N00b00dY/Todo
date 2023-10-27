@@ -1,8 +1,8 @@
-name: Tests on merge
+name: Run Unit tests on merge
 
 on:
+  workflow_dispatch:
   pull_request:
-    types: [closed]
     branches:
       - master
 
