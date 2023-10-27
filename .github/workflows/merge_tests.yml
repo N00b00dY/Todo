@@ -9,11 +9,11 @@ on:
 jobs:
   test-on-merge:
     runs-on: ubuntu-latest
-    services:
-      dind:
-        image: docker:20.10.8-dind
-        ports:
-          - 2375:2375
+#    services:
+#      dind:
+#        image: docker:20.10.8-dind
+#        ports:
+#          - 2375:2375
 
     steps:
       - uses: actions/checkout@v2
