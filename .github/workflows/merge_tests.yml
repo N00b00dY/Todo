@@ -1,0 +1,29 @@
+name: Tests on merge
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - master
+
+jobs:
+  test-on-merge:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run tests
+        run: |
+          echo "Running tests"
+          echo " "
+          echo "DB service tests"
+          cd db-service
+          go test -cover -timeout 30s ./...  
+          echo " "
+          echo "Distributor service tests"
+          cd ../distributor-service
+          go test -cover -timeout 30s ./...
+          echo " "
+          echo "Front-end service tests"
+          cd ../front-end
+          go test -cover -timeout 30s ./...
+
