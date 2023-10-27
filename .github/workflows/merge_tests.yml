@@ -17,13 +17,16 @@ jobs:
           echo " "
           echo "DB service tests"
           cd db-service
+          go get .
           go test -cover -timeout 30s ./...  
           echo " "
           echo "Distributor service tests"
           cd ../distributor-service
+          go get .
           go test -cover -timeout 30s ./...
           echo " "
           echo "Front-end service tests"
           cd ../front-end
+          go get .
           go test -cover -timeout 30s ./...
 
