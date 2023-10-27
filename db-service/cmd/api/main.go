@@ -30,7 +30,6 @@ type Config struct {
 func main() {
 
 	// connect to DB
-	// connect to DB
 	conn := connectToDB()
 	if conn == nil {
 		log.Panic("Can't connect to Postgres!")

@@ -1,8 +1,17 @@
 package main
 
-/*
+import (
+	"bytes"
+	"encoding/json"
+	"net/http"
+	"net/http/httptest"
+	"testing"
+)
+
 func Test_handler(t *testing.T) {
-	testApp := Config{}
+	testApp := Config{
+		dbServiceName: "",
+	}
 	testCases := []struct {
 		Name     string
 		Methode  string
@@ -49,11 +58,10 @@ func Test_handler(t *testing.T) {
 
 			handler.ServeHTTP(rr, req)
 
-			if rr.Code != http.StatusOK {
+			if rr.Code != http.StatusAccepted {
 				t.Errorf("expected http.StatusAccepted but got %d", rr.Code)
 			}
 		})
 	}
 
 }
-*/

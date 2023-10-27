@@ -34,7 +34,7 @@ func (app *Config) AddToDo(w http.ResponseWriter, r *http.Request) {
 	}
 
 	//give the todo to the DB service to save it
-	conn, err := grpc.Dial("db-service:5001", grpc.WithTransportCredentials(insecure.NewCredentials()), grpc.WithBlock())
+	conn, err := grpc.Dial(fmt.Sprintf("%s:5001", app.dbServiceName), grpc.WithTransportCredentials(insecure.NewCredentials()), grpc.WithBlock())
 	if err != nil {
 		app.throwJSONError(w, err, http.StatusBadRequest)
 		return
@@ -69,7 +69,6 @@ func (app *Config) AddToDo(w http.ResponseWriter, r *http.Request) {
 
 // DeleteToDo sends ID to the DB service
 func (app *Config) DeleteToDo(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("Check to do running")
 	var requestPayload struct {
 		ID int32 `json:"ID"`
 	}
@@ -81,7 +80,7 @@ func (app *Config) DeleteToDo(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	conn, err := grpc.Dial("db-service:5001", grpc.WithTransportCredentials(insecure.NewCredentials()), grpc.WithBlock())
+	conn, err := grpc.Dial(fmt.Sprintf("%s:5001", app.dbServiceName), grpc.WithTransportCredentials(insecure.NewCredentials()), grpc.WithBlock())
 	if err != nil {
 		app.throwJSONError(w, err, http.StatusBadRequest)
 		return
@@ -128,7 +127,7 @@ func (app *Config) CheckToDo(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	conn, err := grpc.Dial("db-service:5001", grpc.WithTransportCredentials(insecure.NewCredentials()), grpc.WithBlock())
+	conn, err := grpc.Dial(fmt.Sprintf("%s:5001", app.dbServiceName), grpc.WithTransportCredentials(insecure.NewCredentials()), grpc.WithBlock())
 	if err != nil {
 		app.throwJSONError(w, err, http.StatusBadRequest)
 		return

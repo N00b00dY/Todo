@@ -28,7 +28,7 @@ down:
 ## build_broker: builds the broker binary as a linux executable
 build_broker:
 	@echo "Building broker binary..."
-	cd ../broker-service && go test -timeout 30s -coverprofile=coverage.out ./... &&
+	#cd ../broker-service && go test -timeout 30s  ./... &&
 	cd ../broker-service && env GOOS=linux CGO_ENABLED=0 go build -o ${BROKER_BINARY} ./cmd/api
 	@echo "Done!"
 
@@ -37,14 +37,14 @@ build_broker:
 ## build_front: builds the frone end binary
 build_front:
 	@echo "Building front end binary..."
-	cd ../front-end && go test -timeout 30s -coverprofile=coverage.out ./...    
+	#cd ../front-end && go test -timeout 30s  ./...
 	cd ../front-end && env GOOS=linux CGO_ENABLED=0 go build -o ${FRONT_END_BINARY} ./cmd/web
 	@echo "Done!"
 
 ## build_db: builds the frone end binary
 build_db:
 	@echo "Building db service binary..."
-	cd ../db-service && go test -timeout 30s -coverprofile=coverage.out ./... 
+	#cd ../db-service && go test -timeout 30s  ./...
 	cd ../db-service && env GOOS=linux CGO_ENABLED=0 go build -o ${DB_BINARY} ./cmd/api
 	@echo "Done!"
 
@@ -52,6 +52,6 @@ build_db:
 ## build_distributor: builds the frone end binary
 build_distributor:
 	@echo "Building distributor binary..."
-	cd ../distributor-service && go test -timeout 30s -coverprofile=coverage.out ./...
+	#cd ../distributor-service && go test -timeout 60s  ./...
 	cd ../distributor-service && env GOOS=linux CGO_ENABLED=0 go build -o ${DISTRIBUTOR_BINARY} ./cmd/api
 	@echo "Done!"

@@ -30,7 +30,7 @@ services:
       dockerfile: ./../db-service/db-service.dockerfile
     restart: always
     ports:
-      - "5001:80"
+      - "5001:5001"
     deploy:
       mode: replicated
       replicas: 1

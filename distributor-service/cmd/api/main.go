@@ -9,10 +9,13 @@ import (
 const webPort = "80"
 
 type Config struct {
+	dbServiceName string
 }
 
 func main() {
-	app := Config{}
+	app := Config{
+		dbServiceName: "db-service",
+	}
 
 	log.Printf("Starting broker service on port %s \n", webPort)
 

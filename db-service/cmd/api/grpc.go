@@ -43,7 +43,6 @@ func (l *DBServer) AddToDo(ctx context.Context, req *dbs.TodoRequest) (*dbs.Todo
 
 func (l *DBServer) DeleteToDo(ctx context.Context, req *dbs.TodoRequest) (*dbs.TodoResponse, error) {
 	input := req.GetTodoEntry()
-	fmt.Println("Delete to do running")
 	err := l.PostgresRepository.DeleteByID(int(input.ID))
 	if err != nil {
 		fmt.Println("Could not delete todo")
@@ -51,7 +50,7 @@ func (l *DBServer) DeleteToDo(ctx context.Context, req *dbs.TodoRequest) (*dbs.T
 		return res, err
 	}
 
-	res := &dbs.TodoResponse{Result: "added"}
+	res := &dbs.TodoResponse{Result: "deleted"}
 	return res, nil
 
 }
@@ -78,7 +77,7 @@ func (l *DBServer) CheckToDo(ctx context.Context, req *dbs.TodoRequest) (*dbs.To
 		return res, err
 	}
 
-	res := &dbs.TodoResponse{Result: "added"}
+	res := &dbs.TodoResponse{Result: "checked"}
 	return res, nil
 
 }
@@ -104,6 +103,7 @@ func (app *Config) gRPCListen() {
 	lis, err := net.Listen("tcp", fmt.Sprintf(":%s", gRpcPort))
 	if err != nil {
 		log.Fatalf("Fail to listen for gRPC: Q%v", err)
+
 	}
 
 	s := grpc.NewServer()
@@ -115,5 +115,7 @@ func (app *Config) gRPCListen() {
 	err = s.Serve(lis)
 	if err != nil {
 		log.Fatalf("Fail to listen for gRPC: Q%v", err)
+
 	}
+
 }
