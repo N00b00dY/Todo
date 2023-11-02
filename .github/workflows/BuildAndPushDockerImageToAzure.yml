@@ -20,3 +20,4 @@ jobs:
           ls
           env GOOS=linux CGO_ENABLED=0 go build -o dbServiceApp ./cmd/api
           docker build .  --tag ${{ secrets.REGISTRY_NAME }}/db-service:latest
+          docker push ${{ secrets.REGISTRY_NAME }}/db-service:latest
