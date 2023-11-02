@@ -17,5 +17,6 @@ jobs:
       - name: Build a Docker image
         run: |
           cd db-service
+          echo ls
           env GOOS=linux CGO_ENABLED=0 go build -o dbServiceApp ./cmd/api
           docker build .  --tag ${{ secrets.REGISTRY_NAME }}/db-service:latest
