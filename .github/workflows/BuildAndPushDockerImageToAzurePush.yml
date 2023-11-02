@@ -28,7 +28,7 @@ jobs:
           ls
           cd distributor-service
           env GOOS=linux CGO_ENABLED=0 go build -o distributorServiceApp ./cmd/api
-          docker build .  --tag ${{ secrets.REGISTRY_NAME }}/distribution-service:latest
+          docker build .  --tag ${{ secrets.REGISTRY_NAME }}/distributor-service:latest
           docker push ${{ secrets.REGISTRY_NAME }}/distributor-service:latest
 
       - name: Build&Push Front-End Service Docker image
