@@ -1,5 +1,4 @@
 FRONT_END_BINARY=frontEndServiceApp
-BROKER_BINARY=brokerApp
 DISTRIBUTOR_BINARY=distributorServiceApp
 DB_BINARY=dbServiceApp
 

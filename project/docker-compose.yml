@@ -5,7 +5,7 @@ services:
   front-end-service:
     build: 
       context: ./../front-end
-      dockerfile: ./../front-end/front-end-service.dockerfile
+      dockerfile: ../front-end/Dockerfile
     restart: always
     ports:
       - "8081:8081"
@@ -16,7 +16,7 @@ services:
   distributor-service:
     build: 
       context: ./../distributor-service
-      dockerfile: ./../distributor-service/distributor-service.dockerfile
+      dockerfile: ../distributor-service/Dockerfile
     restart: always
     ports:
       - "8080:80"
@@ -27,7 +27,7 @@ services:
   db-service:
     build: 
       context: ./../db-service
-      dockerfile: ./../db-service/db-service.dockerfile
+      dockerfile: ../db-service/Dockerfile
     restart: always
     ports:
       - "5001:5001"

@@ -1,0 +1,40 @@
+name: Build Linux Container Image and Push to Azure Container Registry
+
+on:
+  workflow_dispatch:
+  push:
+    tags: [ "v*.*.*" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: azure/docker-login@v1
+        with:
+          login-server: ${{ secrets.REGISTRY_NAME }}
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+      - name: Get tag
+        id: tag
+        uses: dawidd6/action-get-tag@v1
+      - name: Build&Push DB Service Docker image
+        run: |
+          cd db-service
+          env GOOS=linux CGO_ENABLED=0 go build -o dbServiceApp ./cmd/api
+          docker build .  --tag ${{ secrets.REGISTRY_NAME }}/db-service:${{ steps.tag.outputs.tag }}
+          docker push ${{ secrets.REGISTRY_NAME }}/db-service:${{ steps.tag.outputs.tag }}
+
+      - name: Build&Push Distributor Service Docker image
+        run: |
+          cd distributor-service
+          env GOOS=linux CGO_ENABLED=0 go build -o distributorServiceApp ./cmd/api
+          docker build .  --tag ${{ secrets.REGISTRY_NAME }}/distribution-service:${{ steps.tag.outputs.tag }}
+          docker push ${{ secrets.REGISTRY_NAME }}/distributor-service:${{ steps.tag.outputs.tag }}
+
+      - name: Build&Push Front-End Service Docker image
+        run: |
+          cd front-end
+          env GOOS=linux CGO_ENABLED=0 go build -o frontEndServiceApp ./cmd/api
+          docker build .  --tag ${{ secrets.REGISTRY_NAME }}/front-end:${{ steps.tag.outputs.tag }}
+          docker push ${{ secrets.REGISTRY_NAME }}/front-end:${{ steps.tag.outputs.tag }}
