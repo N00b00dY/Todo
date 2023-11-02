@@ -13,6 +13,8 @@ jobs:
           login-server: ${{ secrets.REGISTRY_NAME }}
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
+
+      - name: Build&Push DB Service Docker image
         run: |
           cd db-service
           env GOOS=linux CGO_ENABLED=0 go build -o dbServiceApp ./cmd/api
