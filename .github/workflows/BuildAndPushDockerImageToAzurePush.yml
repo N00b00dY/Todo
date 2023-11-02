@@ -24,7 +24,9 @@ jobs:
 
       - name: Build&Push Distributor Service Docker image
         run: |  
-          cd ../distributor-service
+          cd ..
+          ls
+          cd distributor-service
           env GOOS=linux CGO_ENABLED=0 go build -o distributorServiceApp ./cmd/api
           docker build .  --tag ${{ secrets.REGISTRY_NAME }}/distribution-service:latest
           docker push ${{ secrets.REGISTRY_NAME }}/distributor-service:latest
