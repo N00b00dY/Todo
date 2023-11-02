@@ -31,8 +31,7 @@ jobs:
 
       - name: Build&Push Front-End Service Docker image
         run: |
-          ls
-          cd ../front-end
-          env GOOS=linux CGO_ENABLED=0 go build -o frontEndServiceApp ./cmd/api
+          cd front-end
+          env GOOS=linux CGO_ENABLED=0 go build -o frontEndServiceApp ./cmd/web
           docker build .  --tag ${{ secrets.REGISTRY_NAME }}/front-end:latest
           docker push ${{ secrets.REGISTRY_NAME }}/front-end:latest
