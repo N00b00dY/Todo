@@ -1,0 +1,21 @@
+name: Build Linux Container Image and Push to Azure Container Registry
+
+on:
+  workflow_dispatch:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: azure/docker-login@v1
+        with:
+          login-server: ${{ secrets.REGISTRY_NAME }}
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+      - name: Build a Docker image
+        run: |
+          docker build --file ./db-service/Dockerfile --tag ${{ secrets.REGISTRY_NAME }}/db-service:latest ./db-service
+          docker build --file ./distributor-service/Dockerfile --tag ${{ secrets.REGISTRY_NAME }}/distributor-service:latest ./distributor-service
+          docker build --file ./front-end/Dockerfile --tag ${{ secrets.REGISTRY_NAME }}/front-end:latest ./front-end
