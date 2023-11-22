@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: distributor
 spec:
-  replicas: 0
+  replicas: 1
   selector:
     matchLabels:
       app: distributor
@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: distributor
-          image: alpine:latest
+          image: todo99.azurecr.io/distributor-service:v0.0.6
           resources:
             requests:
               memory: "64Mi"
@@ -23,8 +23,13 @@ spec:
             limits:
               memory: "128Mi"
               cpu: "500m"
+          env:
+            - name: DSN
+              value: "host=postgres-service port=5432 user=postgres password=password dbname=todo sslmode=disable"
           ports:
             - containerPort: 8080
+      imagePullSecrets:
+        - name: acr-auth
 
 ---
 apiVersion: v1
@@ -38,6 +43,6 @@ spec:
     - protocol: TCP
       name: main-port
       port: 8080
-      targetPort: 8080
+      targetPort: 80
 
 

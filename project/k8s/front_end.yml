@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: db-service
+  name: front-end
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: db-service
+      app: front-end
   template:
     metadata:
       labels:
         app:
-          db-service
+          front-end
     spec:
       containers:
-        - name: db-service
-          image: todo99.azurecr.io/db-service:v0.0.6
+        - name: front-end
+          image: todo99.azurecr.io/front-end:v0.0.6
           resources:
             requests:
               memory: "64Mi"
@@ -23,9 +23,6 @@ spec:
             limits:
               memory: "128Mi"
               cpu: "500m"
-          env:
-            - name: DSN
-              value: "host=postgres-service port=5432 user=postgres password=password dbname=todo sslmode=disable"
           ports:
             - containerPort: 8080
       imagePullSecrets:
@@ -35,15 +32,14 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: db-service
+  name: front-end
 spec:
   selector:
-    name: db-service
+    name: front-end
   ports:
     - protocol: TCP
       name: main-port
-      port: 5001
-      targetPort: 5001
-
+      port: 8080
+      targetPort: 8080
 
 

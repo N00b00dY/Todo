@@ -1,0 +1,106 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app:
+          postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          env:
+            - name: POSTGRES_INITDB_DATABASE
+              value: "todo"
+            - name: POSTGRES_INITDB_ROOT_USER
+              value: "postgres"
+            - name: POSTGRES_INITDB_ROOT_PASSWORD
+              value: "password"
+            - name:  POSTGRES_HOST_AUTH_METHOD
+              value:  "trust"
+
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            # The volume mounts  for the container
+            - mountPath: /var/lib/postgres/data
+              name: db-data
+            # Volumes attached to the pod
+      volumes:
+        - name: db-data
+          persistentVolumeClaim:
+            # reference the PersistentVolumeClaim
+            claimName: db-persistent-volume-claim
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+spec:
+  selector:
+    app: postgres
+  ports:
+    - protocol: TCP
+      name: main-port
+      port: 5432
+      targetPort: 5432
+
+---
+
+apiVersion: v1
+# Kind for volume chain
+kind: PersistentVolume
+metadata:
+  # Name the persistent chain
+  name: postgresdb-persistent-volume
+  # Labels for identifying PV
+  labels:
+    type: local
+    app: postgresdb
+spec:
+  storageClassName: manual
+  capacity:
+    # PV Storage capacity
+    storage: 8Gi
+  # A db can write and read from volumes to multiple pods
+  accessModes:
+    - ReadWriteMany
+  # Specify the path to persistent the volumes
+  hostPath:
+    path: "/data/db"
+
+---
+
+apiVersion: v1
+# define a resource for volume chain
+kind: PersistentVolumeClaim
+metadata:
+  # Name the volume chain
+  name: db-persistent-volume-claim
+spec:
+  storageClassName: manual
+  accessModes:
+    # Allow ReadWrite to multiple pods
+    - ReadWriteMany
+  # PVC requesting resources
+  resources:
+    requests:
+      # the PVC storage
+      storage: 8Gi
+
+
