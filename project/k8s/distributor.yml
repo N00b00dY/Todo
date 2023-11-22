@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: distributor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: distributor
+  template:
+    metadata:
+      labels:
+        app:
+          distributor
+    spec:
+      containers:
+        - name: distributor
+          image: todo99.azurecr.io/distributor-service:v0.0.6
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          env:
+            - name: DSN
+              value: "host=postgres-service port=5432 user=postgres password=password dbname=todo sslmode=disable"
+          ports:
+            - containerPort: 8080
+      imagePullSecrets:
+        - name: acr-auth
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: distributor
+spec:
+  selector:
+    name: distributor
+  ports:
+    - protocol: TCP
+      name: main-port
+      port: 8080
+      targetPort: 80
+
+
